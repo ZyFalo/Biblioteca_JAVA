@@ -83,7 +83,7 @@ public class Bibliotecta {
 
                                 e = Libro.keys();
 
-                                String Aux = "Estudiantes Registrados:\n\n";
+                                String Aux = "Libros Registrados:\n\n";
 
                                 while (e.hasMoreElements()) {
 
@@ -144,7 +144,7 @@ public class Bibliotecta {
 
                                 } else {
 
-                                    JOptionPane.showMessageDialog(null, "El ID no existe o ya está prestado\n\n Intente:\n"
+                                    JOptionPane.showMessageDialog(null, "El ID no existe o está prestado\n\n Intente:\n"
                                             + "1 - Inserte Libros en la biblioteca \n"
                                             + "2 - Consultar los libros y su disponibilidad \n"
                                             + "7 - Devolver un libro \n\n");
@@ -239,26 +239,34 @@ public class Bibliotecta {
 
                                     int idPrestamo = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID del Libro que desea \n\n" + Aux));
 
-                                    tempoLibro = (Libro) Libro.get(idPrestamo);
+                                    e = Libro.keys();
 
                                     boolean existe_libro = false;
 
-                                    if (tempoLibro.getIdLibro() == idPrestamo) {
+                                    if (Libro.containsKey(idPrestamo)) {
 
                                         existe_libro = true;
+                                        tempoLibro = (Libro) Libro.get(idPrestamo);
 
-                                    }
+                                        if (existe_libro & tempoLibro.getEstado() == false) {
 
-                                    if (existe_libro & tempoLibro.getEstado() == false) {
+                                            Prestamo.put(idPrestamo, new Prestamo(idPrestamo, codigo));
 
-                                        Prestamo.put(idPrestamo, new Prestamo(idPrestamo, codigo));
+                                            tempoLibro.setEstado(true);
+                                            tempoLibro.setEstadoTexto(codigo);
 
-                                        tempoLibro.setEstado(true);
-                                        tempoLibro.setEstadoTexto(codigo);
+                                        } else {
+
+                                            JOptionPane.showMessageDialog(null, "El Libro ya está en prestamo\n\n Intente:\n"
+                                                    + "1 - Inserte Libros en la biblioteca \n"
+                                                    + "2 - Consultar los libros y su disponibilidad \n"
+                                                    + "7 - Devolver un libro \n\n");
+
+                                        }
 
                                     } else {
 
-                                        JOptionPane.showMessageDialog(null, "ID de Libro no existe o ya está en prestamo\n\n Intente:\n"
+                                        JOptionPane.showMessageDialog(null, "ID de Libro no existe\n\n Intente:\n"
                                                 + "1 - Inserte Libros en la biblioteca \n"
                                                 + "2 - Consultar los libros y su disponibilidad \n"
                                                 + "7 - Devolver un libro \n\n");
