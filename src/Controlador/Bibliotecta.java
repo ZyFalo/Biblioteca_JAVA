@@ -340,6 +340,12 @@ public class Bibliotecta {
                             }
 
                             break;
+
+                        default:
+
+                            JOptionPane.showMessageDialog(null, "Opción no válida.");
+
+                            break;
                     }
 
                 } while (opcion != 0);
